@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Reply">
+	<sql id="select">
+		select * from Reply
+	</sql>
+
+	<select id="selectAll" resultType="Reply" parameterType="int">
+		<include refid="select" />
+		where board_id=#{board_id} order by Reply_id desc
+	</select>
+
+	<select id="selectOne" parameterType="int" resultType="Reply">
+		<include refid="select" />
+		where Reply_id=#{Reply_id}
+	</select>
+
+	<insert id="insert" parameterType="Reply">
+		insert into Reply(reply_id, writer, msg,board_id)
+		values(seq_reply.nextval ,#{writer},#{msg}, #{board_id})
+	</insert>
+
+</mapper>
+
+
+
+
+
+
+
+
+

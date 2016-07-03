@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.mvc.board.domain.Board" alias="Board"/>
+		<typeAlias type="com.mvc.reply.domain.Reply" alias="Reply"/>
+	</typeAliases>
+	<mappers>
+		<mapper resource="com/mvc/board/repository/BoardMapper.xml" />
+		<mapper resource="com/mvc/reply/repository/ReplyMapper.xml" />
+	</mappers>
+</configuration>

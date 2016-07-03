@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Board">
+	
+	<resultMap id="joinMap" type="Board">
+		<id property="board_id" 		column="board_id"/>
+		<result property="writer" 	column="writer"/>
+		<result property="title" 		column="title"/>
+		<result property="count" 	column="count"/>
+		<result property="content" 	column="content"/>
+		<result property="regdate" 	column="regdate"/>
+		<result property="hit" 			column="hit"/>
+		
+		<collection property="reply" 		ofType="Reply">
+			<id property="reply_id" 			column="reply_id"/>
+			<result property="writer" 		column="writer"/>
+			<result property="msg" 			column="msg"/>
+			<result property="regdate" 		column="regdate"/>
+			<result property="board_id" 	column="board_id"/>
+		</collection>
+	</resultMap>
+				
+	<sql id="select">
+		select * from board
+	</sql>
+
+	<select id="selectAll" resultType="Board">
+		<include refid="select" />
+		order by board_id desc
+	</select>
+	
+	<select id="selectGroup" resultMap="joinMap">
+		select b.board_id, title, b.writer, b.regdate , count(r.board_id) as count
+		from board b left outer join reply r
+		on b.board_id = r.board_id
+		group by b.board_id, title, b.writer, b.regdate	
+	</select>
+	
+	<select id="selectOne" parameterType="int" resultType="Board">
+		<include refid="select" />
+		where board_id=#{board_id}
+	</select>
+
+	<insert id="insert" parameterType="Board">
+		insert into board(title,writer,content)
+		values(#{title},#{writer},#{content})
+	</insert>
+
+	<update id="update" parameterType="Board">
+		update board set
+		title=#{title}, writer=#{writer},content=#{content}
+		where
+		board_id=#{board_id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete from board where board_id=#{board_id}
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+
+
